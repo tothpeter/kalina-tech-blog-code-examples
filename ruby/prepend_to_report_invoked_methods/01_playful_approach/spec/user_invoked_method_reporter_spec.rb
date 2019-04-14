@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-# user_invoked_method_reporter_spec.rb
-
-require 'prepend_to_report_invoked_methods/01_playful_approach/user'
-require 'prepend_to_report_invoked_methods/01_playful_approach/user_invoked_method_reporter'
+require './user'
+require './user_invoked_method_reporter'
 
 describe UserInvokedMethodReporter do
   it 'invokes the reporter then the original impl' do

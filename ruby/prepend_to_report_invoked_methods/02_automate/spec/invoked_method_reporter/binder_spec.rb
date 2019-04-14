@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-# invoked_method_reporter/binder_spec.rb
-
-require 'prepend_to_report_invoked_methods/02_automate/user'
-require 'prepend_to_report_invoked_methods/02_automate/invoked_method_reporter'
-require 'prepend_to_report_invoked_methods/02_automate/invoked_method_reporter/binder'
+require './user'
+require './invoked_method_reporter'
+require './invoked_method_reporter/binder'
 
 describe InvokedMethodReporter::Binder do
   describe '.bind' do

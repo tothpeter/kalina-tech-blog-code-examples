@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './check_opening_hours_in_ruby/example'
+require './example'
 require 'timecop'
 
 describe MyBankOpeningHours do
