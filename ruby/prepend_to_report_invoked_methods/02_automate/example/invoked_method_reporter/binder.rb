@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# invoked_method_reporter/binder.rb
 module InvokedMethodReporter
   class Binder
     attr_reader :namespace, :method_name, :method_definition
 
-    def self.bind(method_definition)
+    def self.bind_to(method_definition)
       new(method_definition).bind
     end
 
