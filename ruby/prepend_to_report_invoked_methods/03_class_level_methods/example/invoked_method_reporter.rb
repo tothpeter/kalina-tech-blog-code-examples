@@ -2,11 +2,7 @@
 
 module InvokedMethodReporter
   def self.bind_to(method_definition)
-    if method_definition.include?('.')
-      ClassLevelBinder.bind_to(method_definition)
-    else
-      ObjectLevelBinder.bind_to(method_definition)
-    end
+    Binder.bind_to(method_definition)
   end
 
   def self.report(method_definition)

@@ -5,7 +5,11 @@ module InvokedMethodReporter
     attr_reader :namespace, :method_name, :method_definition
 
     def self.bind_to(method_definition)
-      new(method_definition).bind
+      if method_definition.include?('.')
+        ClassLevelBinder.new(method_definition).bind
+      else
+        ObjectLevelBinder.new(method_definition).bind
+      end
     end
 
     def initialize(method_definition)
