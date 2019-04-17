@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require './user'
-require './user_invoked_method_reporter'
+require './example/user'
+require './example/user_invoked_method_reporter'
 
 describe UserInvokedMethodReporter do
   it 'invokes the reporter then the original impl' do
