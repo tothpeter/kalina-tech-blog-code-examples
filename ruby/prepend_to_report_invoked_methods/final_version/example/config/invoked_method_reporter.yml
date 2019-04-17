@@ -1,0 +1,4 @@
+# Please list the modules first before the classes and before they get included
+# Binding is useless in case of modules if a class/module already included the target module
+
+methods_to_report: []
