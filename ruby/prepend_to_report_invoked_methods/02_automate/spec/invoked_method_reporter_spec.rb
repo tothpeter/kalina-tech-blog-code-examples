@@ -2,7 +2,6 @@
 
 require './example/user'
 require './example/invoked_method_reporter'
-require './example/invoked_method_reporter/binder'
 
 describe InvokedMethodReporter do
   describe '.bind_to' do

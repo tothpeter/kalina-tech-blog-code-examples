@@ -2,9 +2,6 @@
 
 require './example/user'
 require './example/invoked_method_reporter'
-require './example/invoked_method_reporter/binder'
-require './example/invoked_method_reporter/class_level_binder'
-require './example/invoked_method_reporter/object_level_binder'
 
 describe InvokedMethodReporter do
   describe '.bind_to' do

@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
-require 'rubygems'
-require 'bundler/setup'
-
-require './example/lib/rollbar'
 require './example/lib/invoked_method_reporter'
-require './example/lib/invoked_method_reporter/config'
-require './example/lib/invoked_method_reporter/binder'
-require './example/lib/invoked_method_reporter/class_level_binder'
-require './example/lib/invoked_method_reporter/object_level_binder'
 
 describe InvokedMethodReporter do
   module TargetModule

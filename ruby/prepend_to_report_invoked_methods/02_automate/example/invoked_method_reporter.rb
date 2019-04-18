@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require './example/invoked_method_reporter/binder'
+
 module InvokedMethodReporter
   def self.bind_to(method_definition)
     Binder.bind_to(method_definition)
