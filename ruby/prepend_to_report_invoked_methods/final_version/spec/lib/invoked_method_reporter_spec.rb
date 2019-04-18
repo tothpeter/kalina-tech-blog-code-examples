@@ -107,7 +107,7 @@ describe InvokedMethodReporter do
       it 'invokes Rollbar with the right params' do
         expected_message = '[InvokedMethodReporter] TargetModule#unused_method_from_module was invoked'
 
-        # expect(Rollbar).to receive(:info).with(expected_message, anything).exactly(2).times
+        expect(Rollbar).to receive(:info).with(expected_message, anything).exactly(2).times
 
         TargetClass.unused_method_from_module
         TargetClass.new.unused_method_from_module
