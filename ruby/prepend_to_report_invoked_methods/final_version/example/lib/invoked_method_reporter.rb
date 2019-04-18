@@ -17,8 +17,7 @@ module InvokedMethodReporter
   end
 
   def self.setup
-    methods_to_report = InvokedMethodReporter.config.methods_to_report
-    bind_to(methods_to_report)
+    bind_to(config.methods_to_report)
   end
 
   def self.bind_to(methods)
@@ -32,6 +31,8 @@ module InvokedMethodReporter
       ClassLevelBinder.bind_to(method_definition)
     end
   end
+
+  private_class_method
 
   def self.report(method_definition)
     message = "[InvokedMethodReporter] #{method_definition} was invoked"
