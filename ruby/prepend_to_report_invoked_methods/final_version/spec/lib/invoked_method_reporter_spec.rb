@@ -58,7 +58,7 @@ describe InvokedMethodReporter do
     end
 
     context 'when the method is defined in an included module' do
-      context 'object level method' do
+      context 'object level' do
         it 'invokes the reporter then the original implementation' do
           target_class_object = TargetClass.new
 
@@ -69,7 +69,7 @@ describe InvokedMethodReporter do
         end
       end
 
-      context 'class level method' do
+      context 'class level' do
         it 'invokes the reporter then the original implementation' do
           expect(described_class).to receive(:report).ordered.and_call_original
           expect(TargetClass).to receive(:original_impl).ordered
@@ -80,7 +80,7 @@ describe InvokedMethodReporter do
     end
 
     context 'when the method is defined the class itself' do
-      context 'object level method' do
+      context 'object level' do
         it 'invokes the reporter then the original implementation' do
           target_class_object = TargetClass.new
 
@@ -91,7 +91,7 @@ describe InvokedMethodReporter do
         end
       end
 
-      context 'class level method' do
+      context 'class level' do
         it 'invokes the reporter then the original implementation' do
           expect(described_class).to receive(:report).ordered.and_call_original
           expect(TargetClass).to receive(:original_impl).ordered
