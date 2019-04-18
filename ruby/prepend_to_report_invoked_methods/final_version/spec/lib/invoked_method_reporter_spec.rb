@@ -3,7 +3,7 @@
 require './example/lib/invoked_method_reporter'
 
 describe InvokedMethodReporter do
-  module TargetModule
+  module TargetModuleForInvokedMethodReporter
     def original_impl; end
 
     def unused_method_from_module
@@ -17,7 +17,7 @@ describe InvokedMethodReporter do
     end
   end
 
-  class TargetClass
+  class TargetClassInvokedMethodReporter
     def unused_method_from_class
       original_impl
     end
@@ -27,18 +27,18 @@ describe InvokedMethodReporter do
     end
   end
 
-  described_class.bind_to('TargetModule#unused_method_from_module')
-  described_class.bind_to('TargetModule.unused_method_in_module')
+  described_class.bind_to('TargetModuleForInvokedMethodReporter#unused_method_from_module')
+  described_class.bind_to('TargetModuleForInvokedMethodReporter.unused_method_in_module')
 
-  TargetClass.include TargetModule
-  TargetClass.extend TargetModule
+  TargetClassInvokedMethodReporter.include TargetModuleForInvokedMethodReporter
+  TargetClassInvokedMethodReporter.extend TargetModuleForInvokedMethodReporter
 
-  described_class.bind_to('TargetClass#unused_method_from_class')
-  described_class.bind_to('TargetClass.unused_method_from_class')
+  described_class.bind_to('TargetClassInvokedMethodReporter#unused_method_from_class')
+  described_class.bind_to('TargetClassInvokedMethodReporter.unused_method_from_class')
 
   after(:all) do
-    Object.send(:remove_const, :TargetModule)
-    Object.send(:remove_const, :TargetClass)
+    Object.send(:remove_const, :TargetModuleForInvokedMethodReporter)
+    Object.send(:remove_const, :TargetClassInvokedMethodReporter)
   end
 
   describe '.config' do
@@ -51,16 +51,16 @@ describe InvokedMethodReporter do
     context 'when the method is defined in the target module' do
       it 'invokes the reporter then the original implementation' do
         expect(described_class).to receive(:report).ordered.and_call_original
-        expect(TargetModule).to receive(:original_impl_in_module).ordered
+        expect(TargetModuleForInvokedMethodReporter).to receive(:original_impl_in_module).ordered
 
-        TargetModule.unused_method_in_module
+        TargetModuleForInvokedMethodReporter.unused_method_in_module
       end
     end
 
     context 'when the method is defined in an included module' do
       context 'object level' do
         it 'invokes the reporter then the original implementation' do
-          target_class_object = TargetClass.new
+          target_class_object = TargetClassInvokedMethodReporter.new
 
           expect(described_class).to receive(:report).ordered.and_call_original
           expect(target_class_object).to receive(:original_impl).ordered
@@ -72,9 +72,9 @@ describe InvokedMethodReporter do
       context 'class level' do
         it 'invokes the reporter then the original implementation' do
           expect(described_class).to receive(:report).ordered.and_call_original
-          expect(TargetClass).to receive(:original_impl).ordered
+          expect(TargetClassInvokedMethodReporter).to receive(:original_impl).ordered
 
-          TargetClass.unused_method_from_module
+          TargetClassInvokedMethodReporter.unused_method_from_module
         end
       end
     end
@@ -82,7 +82,7 @@ describe InvokedMethodReporter do
     context 'when the method is defined the class itself' do
       context 'object level' do
         it 'invokes the reporter then the original implementation' do
-          target_class_object = TargetClass.new
+          target_class_object = TargetClassInvokedMethodReporter.new
 
           expect(described_class).to receive(:report).ordered.and_call_original
           expect(target_class_object).to receive(:original_impl).ordered
@@ -94,9 +94,9 @@ describe InvokedMethodReporter do
       context 'class level' do
         it 'invokes the reporter then the original implementation' do
           expect(described_class).to receive(:report).ordered.and_call_original
-          expect(TargetClass).to receive(:original_impl).ordered
+          expect(TargetClassInvokedMethodReporter).to receive(:original_impl).ordered
 
-          TargetClass.unused_method_from_class
+          TargetClassInvokedMethodReporter.unused_method_from_class
         end
       end
     end
@@ -105,25 +105,25 @@ describe InvokedMethodReporter do
   describe '.report' do
     context 'when the method is defined in a module and added to the class' do
       it 'invokes Rollbar with the right params' do
-        expected_message = '[InvokedMethodReporter] TargetModule#unused_method_from_module was invoked'
+        expected_message = '[InvokedMethodReporter] TargetModuleForInvokedMethodReporter#unused_method_from_module was invoked'
 
         expect(Rollbar).to receive(:info).with(expected_message, anything).exactly(2).times
 
-        TargetClass.unused_method_from_module
-        TargetClass.new.unused_method_from_module
+        TargetClassInvokedMethodReporter.unused_method_from_module
+        TargetClassInvokedMethodReporter.new.unused_method_from_module
       end
     end
 
     context 'when the method is defined by the class itself' do
       it 'invokes Rollbar with the right params' do
-        expected_message1 = '[InvokedMethodReporter] TargetClass#unused_method_from_class was invoked'
-        expected_message2 = '[InvokedMethodReporter] TargetClass.unused_method_from_class was invoked'
+        expected_message1 = '[InvokedMethodReporter] TargetClassInvokedMethodReporter#unused_method_from_class was invoked'
+        expected_message2 = '[InvokedMethodReporter] TargetClassInvokedMethodReporter.unused_method_from_class was invoked'
 
         expect(Rollbar).to receive(:info).with(expected_message1, anything)
         expect(Rollbar).to receive(:info).with(expected_message2, anything)
 
-        TargetClass.unused_method_from_class
-        TargetClass.new.unused_method_from_class
+        TargetClassInvokedMethodReporter.unused_method_from_class
+        TargetClassInvokedMethodReporter.new.unused_method_from_class
       end
     end
   end
